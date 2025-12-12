@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Newsitem extends Component {
+export class NewsItem extends Component {
   
 
 
@@ -8,7 +8,7 @@ export class Newsitem extends Component {
   let  {title, description , imageurl, newsurl}= this.props;
     return (
       <div className='my-3'>
-        <div className="card" style={{width: "18rem"}}>
+        <div className="card" >
         <img src={imageurl} className="card-img-top" alt="News"
         onError={(e) => { 
           e.target.onerror = null;
@@ -25,4 +25,4 @@ export class Newsitem extends Component {
   }
 }
 
-export default Newsitem
+export default NewsItem
