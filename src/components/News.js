@@ -8,7 +8,7 @@ import propTypes from 'prop-types'
 export class News extends Component {
   static defaultProps = {
     country: 'us',
-    pageSize: 8,
+    pageSize: 5,
     category: 'technology'
   }
   static propTypes ={
@@ -42,6 +42,9 @@ export class News extends Component {
 
       }
        handlePrevClick=  async ()=>{
+         if (this.state.page <= 1) return; // prevent invalid page
+         const newPage = this.state.page - 1;
+         this.setState({ loading: true });
          let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
          this.setState({loading:true});
         let data = await fetch(url);
@@ -56,7 +59,9 @@ export class News extends Component {
 
         }
         handleNextClick=  async()=>{
-          if(!(this.state.page +1 >Math.ceil(this.state.totalResults/this.props.pageSize))){
+          if(!(this.state.page +1 >Math.ceil(this.state.totalResults/this.props.pageSize)));
+            const newPage = this.state.page + 1;
+          {
           let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
           this.setState({loading:true});
            let data = await fetch(url);
@@ -65,7 +70,7 @@ export class News extends Component {
            console.log(parsedData);
        
           this.setState({
-            page: this.state.page +1,
+            page: newPage,
             articles:parsedData.articles,
             loading: false
           })
