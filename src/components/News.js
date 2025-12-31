@@ -21,7 +21,8 @@ const News =(props) => {
 
  const updateNews = async ()=> {
     props.setProgress(10);
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${page}&pageSize=${props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${page}&pageSize=${props.pageSize}`; // this does not exist in function component
+
     //this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json()
@@ -36,7 +37,7 @@ const News =(props) => {
 
   useEffect(()=> {
     // console.log("cdm");
-     
+     document.title = `${Capitalize(props.category)} - NewsMonkey`;
     updateNews();
 
   }, []);
@@ -84,8 +85,9 @@ const News =(props) => {
     updateNews();
   }
    const fetchMoreData = async () => {
-   setPage(page+1)
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${page}&pageSize=${props.pageSize}`;
+   
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=a31d8b20b8af482c9b00630c7b0ac70d&page=${page+1}&pageSize=${props.pageSize}`;
+    setPage(page+1)
     
     let data = await fetch(url);
     let parsedData = await data.json()
@@ -101,7 +103,7 @@ const News =(props) => {
 
     return (
       <div className="container my-3">
-        <h1 className="text-center">NewsMonkey - Top   {Capitalize(props.category)} Headlines </h1>
+        <h1 className="text-center" style={{margin: '35px 0px', marginTop:'90px'}}>NewsMonkey - Top   {Capitalize(props.category)} Headlines </h1>
         {loading &&< Spinner/>}
         <InfiniteScroll
           dataLength={articles.length}
